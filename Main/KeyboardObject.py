@@ -11,6 +11,10 @@ class Keyboard:
     # Assignment of keys
     key_assignment = {}
 
+    # Performance scores to be evaluated
+    comfort_score: 0
+    total_distance_traveled: 0
+
     # Randomize key assignments
     def randomize_keys(self):
         return
@@ -18,5 +22,8 @@ class Keyboard:
     # Calculates distance between 2 keys using euclidian distance
     # Param type: string. Example: calc_distance("A", "B")
     # Return type: float Example: 2.52
+    # Things to consider: special keys that require shift.
     def calc_distance(self, key1, key2):
         return
+
+
