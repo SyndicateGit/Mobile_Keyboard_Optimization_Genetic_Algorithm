@@ -28,7 +28,6 @@ class Keyboard:
     # Calculates distance between 2 keys using euclidian distance
     # Param type: string. Example: calc_distance("A", "B")
     # Return type: float Example: 2.52
-    # Things to consider: special keys that require shift.
     def calc_distance(self, key1, key2):  # TODO: Jasmine
         return
 
