@@ -9,8 +9,12 @@ class Keyboard:
     # Value Type: tuple(x, y)
     key_coordinates = {}
     # Assignment of keys
+    # Key Type: int (1 to 47)
+    # Value: String() example: 'A'
     key_assignment = {}
     # Comfortability scores
+    # Key Type: int (1 to 47)
+    # Value: int (comfort score decided based on ergonomics paper)
     key_comfort = {}
 
     # Performance scores to be evaluated
