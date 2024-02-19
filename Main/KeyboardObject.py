@@ -10,6 +10,8 @@ class Keyboard:
     key_coordinates = {}
     # Assignment of keys
     key_assignment = {}
+    # Comfortability scores
+    key_comfort = {}
 
     # Performance scores to be evaluated
     comfort_score: 0
