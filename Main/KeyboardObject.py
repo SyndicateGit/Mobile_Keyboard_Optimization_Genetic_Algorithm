@@ -22,6 +22,9 @@ class Keyboard:
     total_distance_traveled: 0
 
     # Randomize key assignments
+    # In key_assignment dictionary, randomizly swap the values.
+    # No parameter, working with self key_assignment field.
+    # Return: None. Mutating key_assignment field.
     def randomize_keys(self):  # TODO: Azwad
         return
 
