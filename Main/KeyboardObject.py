@@ -177,9 +177,91 @@ class Keyboard:
         "123": 81
     }  # TODO: Michael default qwerty
     # Comfortability scores
-    # Key Type: int (1 to 47)
-    # Value: int (comfort score decided based on ergonomics paper)
-    key_comfort = {}  # TODO: Sal, look into ergo paper.
+    # Key Type: int (1 to 81)
+    # Value: int (comfort score decided based on ergonomics paper) - scale of 1 to 10.
+    key_comfort = {
+        "1": 9,     #1st row LOWERCASE
+        "2": 9,
+        "3": 9,
+        "4": 9,
+        "5": 9,
+        "6": 9,
+        "7": 9,
+        "8": 9,
+        "9": 9,
+        "10": 8,
+        "11": 9,     #2nd row
+        "12": 9,
+        "13": 10,
+        "14": 10,
+        "15": 10,
+        "16": 10,
+        "17": 10,
+        "18": 10,
+        "19": 9,
+        "20": 9,     #3rd row
+        "21": 10,
+        "22": 10,
+        "23": 10,
+        "24": 9,
+        "25": 8,
+        "26": 7,
+        "27": 9,    #1st row UPPERCASE
+        "28": 9,
+        "29": 9,
+        "30": 9,
+        "31": 9,
+        "32": 9,
+        "33": 9,
+        "34": 9,
+        "35": 9,
+        "36": 8,
+        "37": 9,     #2nd row
+        "38": 9,
+        "39": 10,
+        "40": 10,
+        "41": 10,
+        "42": 10,
+        "43": 10,
+        "44": 10,
+        "45": 9,
+        "46": 9,     #3rd row
+        "47": 10,
+        "48": 10,
+        "49": 10,
+        "50": 9,
+        "51": 8,
+        "52": 7,
+        "53": 9,    #1st row NUMBERS & SYMBOLS
+        "54": 9,
+        "55": 9,
+        "56": 9,
+        "57": 9,
+        "58": 9,
+        "59": 9,
+        "60": 9,
+        "61": 9,
+        "62": 8,
+        "63": 9,     #2nd row
+        "64": 9,
+        "65": 10,
+        "66": 10,
+        "67": 10,
+        "68": 10,
+        "69": 10,
+        "70": 10,
+        "71": 9,
+        "72": 9,     #3rd row
+        "73": 10,
+        "74": 10,
+        "75": 10,
+        "76": 9,
+        "77": 8,
+        "78": 7,
+        "79": 7,    #space
+        "80": 8,     #shift
+        "81": 6      #123/abc
+    }  # TODO: Sal, look into ergo paper.
 
     # Performance scores to be evaluated
     comfort_score: 0
