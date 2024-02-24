@@ -274,10 +274,22 @@ class Keyboard:
     def randomize_keys(self):  # TODO: Azwad
         return
 
+    
     # Calculates distance between 2 keys using euclidian distance
     # Param type: string. Example: calc_distance("A", "B")
     # Return type: float Example: 2.52
     def calc_distance(self, key1, key2):  # TODO: Jasmine
-        return
+        # Retrieve the integer codes for the keys
+        key1_code = self.key_assignment[key1]
+        key2_code = self.key_assignment[key2]
+
+        # Retrieve the (x, y) coordinates for the keys
+        key1_coordinates = self.key_coordinates[str(key1_code)]
+        key2_coordinates = self.key_coordinates[str(key2_code)]
+
+        # Calculate the Euclidean distance
+        distance = ((key2_coordinates[0] - key1_coordinates[0])**2 + (key2_coordinates[1] - key1_coordinates[1])**2)**0.5
+        # d = Δx^2 + Δy^2
+        return distance
 
 
