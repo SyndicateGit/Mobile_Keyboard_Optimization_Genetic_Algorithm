@@ -284,7 +284,7 @@ class Keyboard:
         
         # Update the key_assignment dictionary with the shuffled values
         self.key_assignment = dict(zip(keys, values))
-        return
+        
 
     
    
