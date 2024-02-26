@@ -272,10 +272,7 @@ class Keyboard:
     # No parameter, working with self key_assignment field.
     # Return: None. Mutating key_assignment field.
     def randomize_keys(self):  # TODO: Azwad
-    # Calculates distance between 2 keys using euclidian distance
-    # Param type: string. Example: calc_distance("A", "B")
-    # Return type: float Example: 2.52
-          # Extract the keys and values from the key_assignment dictionary
+        # Extract the keys and values from the key_assignment dictionary
         keys = list(self.key_assignment.keys())
         values = list(self.key_assignment.values())
         
@@ -285,9 +282,9 @@ class Keyboard:
         # Update the key_assignment dictionary with the shuffled values
         self.key_assignment = dict(zip(keys, values))
         
-
-    
-   
+    # Calculates distance between 2 keys using euclidian distance
+    # Param type: string. Example: calc_distance("A", "B")
+    # Return type: float Example: 2.52
     def calc_distance(self, key1, key2):  # TODO: Jasmine
         # Retrieve the integer codes for the keys
         key1_code = self.key_assignment[key1]
