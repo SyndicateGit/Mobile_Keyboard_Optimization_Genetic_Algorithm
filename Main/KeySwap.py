@@ -9,6 +9,7 @@ import KeyboardObject
 # Param type: Keyboard object
 # Return type: Keyboard object
 # Things to keep in mind: Lowercase and Uppercase same location.
+# Keep spaces, shift, and 123 key locked.
 def key_swap(keyboard1, keyboard2):
     return
 
