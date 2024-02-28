@@ -8,6 +8,7 @@ import KeyboardObject
 # Dependencies: KeyboardObject.py
 # Param type: Keyboard object
 # Return type: Keyboard object
+# Things to keep in mind: Lowercase and Uppercase same location.
 def key_swap(keyboard1, keyboard2):
     return
 
