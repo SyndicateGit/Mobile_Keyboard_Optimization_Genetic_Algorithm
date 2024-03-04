@@ -18,11 +18,6 @@ def key_swap(keyboard1, keyboard2):
     # Have a list of all assignable characters (excluding Capital cases)
     # Randomize that list
 
-    # Keys that have same assignment in keyboard 1 and keyboard 2 gets to be assigned
-    # right away. No conflict.
-    # Pop those keys from assignable list when assigned.
-
-    # For conflicting keys:
     # While the assignable list still has assignable characters:
     # Start a cycle:
     # Pop a key from the list and assign the key location in object
