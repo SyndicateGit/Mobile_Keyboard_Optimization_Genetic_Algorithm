@@ -1,4 +1,4 @@
-from Mobile_Keyboard_Optimization_Genetic_Algorithm.Main import KeyboardObject
+from Mobile_Keyboard_Optimization_Genetic_Algorithm.Main.KeyboardObject import Keyboard
 
 # Graphics of keyboard and performance graphs.
 # For now, we just want to display the best performing keyboard on screen.

@@ -1,4 +1,4 @@
-import KeyboardObject
+from KeyboardObject import Keyboard
 import KeySwap
 from Mobile_Keyboard_Optimization_Genetic_Algorithm.GUI import GUI
 from Mobile_Keyboard_Optimization_Genetic_Algorithm.Evaluation_Pipeline import Evaluate

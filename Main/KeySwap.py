@@ -1,4 +1,4 @@
-import KeyboardObject
+from KeyboardObject import Keyboard
 
 # Key swap algorithm
 # Returns new keyboard object with half of
@@ -13,6 +13,8 @@ import KeyboardObject
 # Keep spaces, shift, and 123 key locked.
 def key_swap(keyboard1, keyboard2):
     # Create new keyboard object
+    child_keyboard = Keyboard()
+
     # Have a list of all assignable characters (excluding Capital cases)
     # Randomize that list
 

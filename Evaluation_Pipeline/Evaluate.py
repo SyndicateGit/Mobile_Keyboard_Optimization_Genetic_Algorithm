@@ -1,4 +1,4 @@
-from Mobile_Keyboard_Optimization_Genetic_Algorithm.Main import KeyboardObject
+from Mobile_Keyboard_Optimization_Genetic_Algorithm.Main.KeyboardObject import Keyboard
 
 # Evaluate a keyboard's performance score by parsing through TextDatum
 # and update the keyboard's attribute for each score.
