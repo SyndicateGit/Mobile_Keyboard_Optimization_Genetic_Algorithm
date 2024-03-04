@@ -23,19 +23,46 @@ def key_swap(keyboard1, keyboard2):
     random.shuffle(assignable_characters)
 
     # While the assignable list still has assignable characters:
-    # Start a cycle:
-    # Pop a key from the list and assign the key location in object
-    # to the location where that key is in keyboard 1.
-    # Find out which key gets displaced for keyboard 2 in key assignment.
-    # That displaced key becomes the next key to be assigned using keyboard 1.
-    # This cycle continues until we go back to the first key that got assigned.
-    # ^This is if detection at beginning of loop
-    # End of a cycle
-    # Every key assigned thus far would be from keyboard 1.
-    # Next pop another key from list and continue but this time with keyboard 2.
+    while(assignable_characters):
+        # Start a cycle:
+        # Pop a key from the list and assign the key location in child keyboard
+        # to the key of a random parent (this parent becomes parent_assign_keyboard)
+        # Find out which key gets displaced from the other keyboard that becomes parent_displaced_keyboard.
+        # That displaced key becomes the next key to be assigned using parent_assign_keyboard.
+        # This cycle continues until we go back to the first key that got assigned.
+        # ^This is if detection at beginning of loop
+        # End of a cycle
+        # Every key assigned in a cycle would be from one keyboard.
+        # Next pop another key from list and continue.
+        cycle_start_key = assignable_characters.pop()
+        current_key = cycle_start_key
+        key_displaced = -1
+        selected_parent = random.choice([1, 2])
+        while key_displaced != cycle_start_key:
+            if(selected_parent == 1):
+                parent_assign_keyboard = keyboard1
+                parent_displaced_keyboard = keyboard2
+            else:
+                parent_assign_keyboard = keyboard2
+                parent_displaced_keyboard = keyboard1
 
-    return
+            key_being_assigned = parent_assign_keyboard.key_assignment[current_key]
+            child_keyboard.key_assignment[current_key] = key_being_assigned
+            key_displaced = find_key_by_value(parent_displaced_keyboard, key_being_assigned)
 
+            if(key_displaced == cycle_start_key):  # Both parents have same location for key assigned
+                continue
+
+            assignable_characters.remove(key_displaced)
+            current_key = key_displaced
+
+    return child_keyboard
+
+# Helper function that searches for key assigned to key number on keyboard
+def find_key_by_value(keyboard, key_number):
+    for key, value in keyboard.key_assignment.items():
+        if value == key_number:
+            return key
 # Mutation
 # Randomly swap n keys.
 # Take n random keys from the key assignment list, randomize the keys.
@@ -47,7 +74,14 @@ def mutate(keyboard, n):
 
 # Test Keyboards:
 keyboard1 = Keyboard()
+keyboard1.randomize_keys()
 keyboard2 = Keyboard()
+keyboard2.randomize_keys()
 
 # Testing KeySwap:
-key_swap(keyboard1, keyboard2)
+print("Keyboard1 : ")
+print(keyboard1.key_assignment)
+print("Keyboard2 : ")
+print(keyboard2.key_assignment)
+print("Child Keyboard: ")
+print(key_swap(keyboard1, keyboard2).key_assignment)
