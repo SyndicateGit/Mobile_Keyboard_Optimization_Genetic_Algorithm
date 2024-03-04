@@ -1,4 +1,5 @@
 from KeyboardObject import Keyboard
+import random
 
 # Key swap algorithm
 # Returns new keyboard object with half of
@@ -12,11 +13,14 @@ from KeyboardObject import Keyboard
 # Things to keep in mind: Lowercase and Uppercase same location.
 # Keep spaces, shift, and 123 key locked.
 def key_swap(keyboard1, keyboard2):
-    # Create new keyboard object
+    # Create new keyboard object for child keyboard to be returned
     child_keyboard = Keyboard()
 
     # Have a list of all assignable characters (excluding Capital cases)
     # Randomize that list
+    assignable_characters = list(child_keyboard.key_assignment.keys())
+    assignable_characters = [key for key in assignable_characters if (len(key) > 1 or not key.isupper())]
+    random.shuffle(assignable_characters)
 
     # While the assignable list still has assignable characters:
     # Start a cycle:
@@ -39,3 +43,11 @@ def key_swap(keyboard1, keyboard2):
 # Return type: keyboard object
 def mutate(keyboard, n):
     return
+
+
+# Test Keyboards:
+keyboard1 = Keyboard()
+keyboard2 = Keyboard()
+
+# Testing KeySwap:
+key_swap(keyboard1, keyboard2)
