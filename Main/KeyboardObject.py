@@ -269,12 +269,77 @@ class Keyboard:
         "81": 6      #123/abc
     }  # TODO: Sal, look into ergo paper.
 
+    key_assignment_letters = {
+        "q": 1,  # LOWERCASE
+        "w": 2,
+        "e": 3,
+        "r": 4,
+        "t": 5,
+        "y": 6,
+        "u": 7,
+        "i": 8,
+        "o": 9,
+        "p": 10,
+        "a": 11,
+        "s": 12,
+        "d": 13,
+        "f": 14,
+        "g": 15,
+        "h": 16,
+        "j": 17,
+        "k": 18,
+        "l": 19,
+        "z": 20,
+        "x": 21,
+        "c": 22,
+        "v": 23,
+        "b": 24,
+        "n": 25,
+        "m": 26,
+    }
+
+    key_assignment_non_letters = {
+        "1": 53,  # NUMBERS & SYMBOLS
+        "2": 54,
+        "3": 55,
+        "4": 56,
+        "5": 57,
+        "6": 58,
+        "7": 59,
+        "8": 60,
+        "9": 61,
+        "0": 62,
+        "-": 63,
+        "/": 64,
+        ":": 65,
+        ";": 66,
+        "(": 67,
+        ")": 68,
+        "$": 69,
+        "&": 70,
+        "@": 71,
+        "QUOTATION": 72,
+        ".": 73,
+        ",": 74,
+        "?": 75,
+        "!": 76,
+        "'": 77,
+        "+": 78,
+    }
+
+    key_assignment_statics = {
+        "SPACE": 79,
+        "SHIFT": 80,
+        # SPECIAL/KEYBOARD CHANGING CHARACTERS (EX: Keyb1: 1-26, Keyb2: 27-52, Keyb3: 53-78... 79, 80, and 81 Static)
+        "123": 81
+    }
     # Performance scores to be evaluated
     comfort_score: 0
     total_distance_traveled: 0
 
     # Randomize key assignments
-    # In key_assignment dictionary, randomizly swap the values.
+    # In key_assignment dictionary, randomizly swap the values between letter groups.
+    # Do the same for non letter group.
     # No parameter, working with self key_assignment field.
     # Return: None. Mutating key_assignment field.
     def randomize_keys(self):  # TODO: Azwad
@@ -283,14 +348,20 @@ class Keyboard:
         #   Then shuffle special key assignments.
         #   We don't want SPACE, SHIFT, and 123/ABC key shuffled.
         # Extract the keys and values from the key_assignment dictionary
-        keys = list(self.key_assignment.keys())
-        values = list(self.key_assignment.values())
-        
+        keys_letters = list(self.key_assignment_letters.keys())
+        values_letters = list(self.key_assignment_letters.values())
+
+        keys_non_letters = list(self.key_assignment_non_letters.keys())
+        values_non_letters = list(self.key_assignment_non_letters.values())
+
         # Shuffle the values randomly
-        random.shuffle(values)
+        random.shuffle(values_letters)
+        random.shuffle(values_non_letters)
         
         # Update the key_assignment dictionary with the shuffled values
-        self.key_assignment = dict(zip(keys, values))
+        self.key_assignment_letters = dict(zip(keys_letters, values_letters))
+        self.key_assignment_non_letters = dict(zip(keys_non_letters, values_non_letters))
+        self.key_assignment = self.key_assignment_letters | self.key_assignment_non_letters | self.key_assignment_statics
         
     # Calculates distance between 2 keys using euclidian distance
     # Param type: string. Example: calc_distance("A", "B")
@@ -309,4 +380,10 @@ class Keyboard:
         # d = Δx^2 + Δy^2
         return distance
 
+
+# Testing
+# randomize_key
+test_keyboard = Keyboard()
+test_keyboard.randomize_keys()
+print(test_keyboard.key_assignment)
 
