@@ -1,42 +1,109 @@
-from turtle import Turtle, Screen
+import turtle
+import tkinter as tk
+from functools import partial
 from Mobile_Keyboard_Optimization_Genetic_Algorithm.Main.KeyboardObject import Keyboard
+import random
 
 # Displays keyboard layout on screen.
 # Parameter Type: keyboard object
 # Dependencies: KeyboardObject.py
-def display_keyboard(keyboard):
+def display_keyboard_turtle(keyboard):
     # Set up the screen
-    screen = Screen()
-    screen.setup(width=600, height=400)
+    screen = turtle.Screen()
+    screen.setup(width=800, height=600)
     screen.title("Keyboard Layout")
 
     # Initialize Turtle
-    turtle = Turtle()
-    turtle.penup()
-    
-    # Draw each key on the screen
-    for key, (x, y) in keyboard.key_coordinates.items():
-        turtle.goto(x, y)
-        turtle.write(key)
+    pen = turtle.Turtle()
+    pen.penup()
+    pen.speed(0)
 
-    # Hide the turtle
-    turtle.hideturtle()
+    # Define key size and spacing
+    key_width = 50
+    key_height = 50
+    key_spacing = 10
+
+    # Draw the keys
+    for key, (x, y) in keyboard.key_coordinates.items():
+        # Move to the position
+        pen.goto(x, y)
+        
+        # Draw the key
+        pen.pendown()
+        pen.begin_fill()
+        for _ in range(4):
+            pen.forward(key_width)
+            pen.right(90)
+        pen.end_fill()
+        pen.penup()
+        
+        # Write the key label
+        pen.goto(x + key_width / 2, y + key_height / 2)
+        pen.write(key, align="center", font=("Arial", 12, "normal"))
+
+    # Hide the pen
+    pen.hideturtle()
+
+    # Keep the window open
     screen.mainloop()
 
-# Displays keyboard performance score on screen.
+# Keyboard object have attributes for performance scores that will
+# be displayed on screen.
 # Parameter Type: keyboard object
 # Dependencies: KeyboardObject.py
 def display_keyboard_performance_score(keyboard):
-    # Print the performance score
-    print(f"Performance Score: {keyboard.performance_score}")
+    print("Performance Evaluation Score:")
+    print("Total Distance Travelled:", keyboard.total_distance_travelled)
+    print("Total Comfort Score:", keyboard.total_comfort_score)
 
-# Fetch a list of keyboard objects ordered by generation. Display a screen
-# with keyboard and performance evaluation score. While in screen, able to click
-# left or right for traversing the keyboard list (1st generation to n generation).
-# Parameter Type: [keyboard object...]
-# Dependencies: KeyboardObject.py, display_keyboard, display_keyboard_performance_score
-def display_keyboards(keyboards):
-    # Display each keyboard and its performance score
-    for keyboard in keyboards:
-        display_keyboard(keyboard)
-        display_keyboard_performance_score(keyboard)
+# Function to display a keyboard and its performance score
+def display_keyboard_gui(root, keyboard):
+    # Create a new window
+    window = tk.Toplevel(root)
+
+    # Display keyboard layout
+    display_keyboard_turtle(keyboard)
+
+    # Display performance evaluation score
+    label = tk.Label(window, text="Performance Evaluation Score:")
+    label.pack()
+
+    distance_label = tk.Label(window, text=f"Total Distance Travelled: {keyboard.total_distance_travelled}")
+    distance_label.pack()
+
+    comfort_label = tk.Label(window, text=f"Total Comfort Score: {keyboard.total_comfort_score}")
+    comfort_label.pack()
+
+# Function to display keyboards and allow traversal
+def display_keyboards_gui(keyboards):
+    root = tk.Tk()
+    root.title("Keyboard Optimization")
+
+    current_index = 0
+
+    # Display the first keyboard
+    display_keyboard_gui(root, keyboards[current_index])
+
+    # Function to handle left arrow key press
+    def prev_keyboard(event):
+        nonlocal current_index
+        current_index = (current_index - 1) % len(keyboards)
+        display_keyboard_gui(root, keyboards[current_index])
+
+    # Function to handle right arrow key press
+    def next_keyboard(event):
+        nonlocal current_index
+        current_index = (current_index + 1) % len(keyboards)
+        display_keyboard_gui(root, keyboards[current_index])
+
+    # Bind left arrow key to display previous keyboard
+    root.bind("<Left>", prev_keyboard)
+
+    # Bind right arrow key to display next keyboard
+    root.bind("<Right>", next_keyboard)
+
+    root.mainloop()
+
+# Test code
+# Assuming 'keyboards' is a list of Keyboard objects
+# display_keyboards_gui(keyboards)
