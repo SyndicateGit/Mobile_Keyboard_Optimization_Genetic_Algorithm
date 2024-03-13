@@ -104,6 +104,3 @@ def display_keyboards_gui(keyboards):
 
     root.mainloop()
 
-# Test code
-# Assuming 'keyboards' is a list of Keyboard objects
-# display_keyboards_gui(keyboards)
