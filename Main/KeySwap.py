@@ -69,7 +69,31 @@ def find_key_by_value(keyboard, key_number):
 # Param type: keyboard object
 # Return type: keyboard object
 def mutate(keyboard, n):
-    return
+    # Have a list of all key assignment list (excluding Capital cases)
+    # Populating that list
+    assignable_characters = list(keyboard.key_assignment.keys())
+    assignable_characters = [key for key in assignable_characters if (len(key) > 1 or not key.isupper())]
+
+    # Take n random keys from the assignable characters list and shuffle
+    mutate_keys = random.sample(assignable_characters, min(n, len(assignable_characters)))
+    random.shuffle(mutate_keys)
+
+    # Reassigning shuffled keys to the keyboard to then be returned
+    for key in mutate_keys:
+        # Obtaining key number for current key
+        keyNumber = keyboard.key_assignment[key]
+
+        # Removing key from its current spot
+        del keyboard.key_assignment[key]
+
+        # Assign the key to a random location
+        newKey = random.choice(assignable_characters)
+        keyboard.key_assignment[newKey] = keyNumber
+        
+        #Remove the new key from assignable_characters list
+        assignable_characters.remove(newKey)
+
+    return keyboard
 
 
 # Test Keyboards:
