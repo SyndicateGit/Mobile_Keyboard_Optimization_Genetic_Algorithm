@@ -1,4 +1,36 @@
-from Mobile_Keyboard_Optimization_Genetic_Algorithm.Main.KeyboardObject import Keyboard
+#TODO: We might want to have everything from lines 3 to 30 in this code be included in main.py rather than here.
+
+import csv
+
+text_data = ""
+
+max_rows = 10000  # The file is very big, so we should choose a max_rows to be read from the data
+
+# Openning the Data file and only storing 
+# relevant information in the text_data variable
+with open("the-reddit-dataset-dataset-comments.csv", "r") as file:
+    # Create a CSV reader object
+    csv_reader = csv.DictReader(file)
+    
+    for i, row in enumerate(csv_reader):
+        if "[deleted]" in row["body"]:
+            continue
+        elif "[removed]" in row["body"]:
+            continue
+        elif "I am a bot" in row["body"]:
+            continue
+        # Removing any posts with links because they include many
+        # special characters that would usually not be types by the user.
+        elif "https://" in row["body"]:
+            continue
+        
+        text_data += row["body"] + ' '
+        
+        if i + 1 >= max_rows:
+            break 
+
+
+print(text_data)
 
 # Evaluate a keyboard's performance score by parsing through TextDatum
 # and update the keyboard's attribute for each score.
