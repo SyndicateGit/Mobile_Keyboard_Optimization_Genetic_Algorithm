@@ -89,12 +89,12 @@ test_keyboard = Keyboard()
 
 # Define some test data
 test_texts = [
+    "1234567890",
     "Hello World!",
     "Python 3.8",
     "G4m3r5",
-    "UPPERCASE",
-    "lowercase",
-    "1234567890",
+    "ABCDEFG",
+    "abcdefg",
     "!@#$%^&*()",
 ]
 
