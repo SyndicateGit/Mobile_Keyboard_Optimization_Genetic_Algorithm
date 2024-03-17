@@ -42,51 +42,42 @@ def evaluate_keyboard(keyboard, text_data):
     last_key = 'SPACE'  # Start from a neutral position like SPACE for the first character
 
     print(f"Starting evaluation for text: {text_data}")
-    
+
     for char in text_data:
         # Check if character is uppercase or special, requiring shift or direct access
         needs_shift = char.isupper() or char in keyboard.key_assignment_non_letters
-        current_key = char.lower() if char.isupper() else char  # Normalize to lowercase for uppercase characters
         
-        # Ensure the character or its lowercase version is in the key assignment
-        if current_key in keyboard.key_assignment:
-            if needs_shift:
-                # Handle uppercase and special characters
-                action = "Uppercase" if char.isupper() else "Special"
-                
-                if char.isupper():  # Uppercase characters require the shift key
-                    if 'SHIFT' in keyboard.key_assignment:
-                        distance_to_shift = keyboard.calc_distance(last_key, 'SHIFT')
-                        distance_to_char = keyboard.calc_distance('SHIFT', current_key)
-                        total_distance += distance_to_shift + distance_to_char
-                        print(f"Processing {action} char '{char}' requiring SHIFT: Total Distance += {distance_to_shift + distance_to_char}")
-                else:  # Special characters directly accessed
-                    distance = keyboard.calc_distance(last_key, current_key)
-                    total_distance += distance
-                    print(f"Processing {action} char '{char}': Total Distance += {distance}")
-                
-                last_key = current_key  # Update last_key to current character for next iteration
-            else:
-                # Handle lowercase and directly accessible characters
+        if needs_shift:
+            # Use the helper method for characters requiring the SHIFT key
+            distance, current_key = keyboard.calc_shift_distance(last_key, char)
+            total_distance += distance
+            action = "Uppercase" if char.isupper() else "Special"
+            print(f"Processing {action} char '{char}': Total Distance += {distance}")
+        else:
+            # Normalize to lowercase for uppercase characters
+            current_key = char.lower() if char.isupper() else char
+            if current_key in keyboard.key_assignment:
+                # Calculate distance for lowercase and directly accessible characters
                 distance = keyboard.calc_distance(last_key, current_key)
                 total_distance += distance
                 print(f"Processing char '{char}': Total Distance += {distance}")
-                last_key = current_key  # Update last_key to current character for next iteration
-            
-            # Calculate comfort score if the current key is valid
+            else:
+                print(f"Character '{char}' not in keyboard assignment. Skipping...")
+
+        last_key = current_key  # Update last_key to current character for next iteration
+        
+        # Calculate and update comfort score
+        if current_key in keyboard.key_assignment:
             char_key_code = keyboard.key_assignment[current_key]
             comfort = keyboard.key_comfort[str(char_key_code)]
             comfort_score += comfort
             print(f"Comfort score for '{char}': {comfort}")
-        else:
-            print(f"Character '{char}' not in keyboard assignment. Skipping...")
-    
+
     # Normalize comfort score based on the text length
     keyboard.comfort_score = comfort_score / len(text_data)
     keyboard.total_distance_traveled = total_distance
-    
+
     print(f"Total distance traveled: {total_distance}")
     print(f"Average comfort score: {keyboard.comfort_score}")
-    
-    return keyboard
 
+    return keyboard
