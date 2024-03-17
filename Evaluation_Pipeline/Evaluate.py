@@ -81,3 +81,26 @@ def evaluate_keyboard(keyboard, text_data):
     print(f"Average comfort score: {keyboard.comfort_score}")
 
     return keyboard
+
+# Assuming evaluate_keyboard is either defined above this code or imported
+
+# Create a keyboard instance
+test_keyboard = Keyboard()
+# Optionally randomize keys if testing for different layouts
+# test_keyboard.randomize_keys()
+
+# Define some test data
+test_texts = [
+    "Hello World!",
+    "Python 3.8",
+    "G4m3r5",
+    "UPPERCASE",
+    "lowercase",
+    "1234567890",
+    "!@#$%^&*()",
+]
+
+# Evaluate each test string
+for text in test_texts:
+    print("\nEvaluating text:", text)
+    evaluate_keyboard(test_keyboard, text)
