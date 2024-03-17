@@ -93,6 +93,9 @@ test_texts = [
     "ABCDEFG",
     "abcdefg",
     "!@#$%^&*()",
+    "AAAAAAAAAAAAAAA",
+    "aAaAaAaAaAaAaAa",
+    "!@#$%^&*()_+{}:<>?",
 ]
 
 # Evaluate each test string
