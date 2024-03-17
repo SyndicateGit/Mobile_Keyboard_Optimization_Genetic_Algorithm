@@ -29,7 +29,6 @@ with open("the-reddit-dataset-dataset-comments.csv", "r") as file:
         if i + 1 >= max_rows:
             break 
 
-
 print(text_data)
 
 # Evaluate a keyboard's performance score by parsing through TextDatum
@@ -40,20 +39,52 @@ print(text_data)
 def evaluate_keyboard(keyboard, text_data):
     total_distance = 0
     comfort_score = 0
-    for i in range(len(text_data) - 1):
-        key1, key2 = text_data[i], text_data[i+1]
-        if key1 in keyboard.key_assignment and key2 in keyboard.key_assignment:
-            # Calculate distance between successive keys
-            distance = keyboard.calc_distance(key1, key2)
-            total_distance += distance
+    last_key = None  # Keep track of the last key to calculate distance
+
+    print(f"Starting evaluation for text: {text_data}")  
+    for char in text_data:
+        # Determine if the character is uppercase or special
+        needs_shift = char.isupper() or char in keyboard.key_assignment_non_letters
+    
+        if needs_shift:
+            current_key = char.lower() if char.isupper() else char  # Convert uppercase to lowercase
+            action = "Uppercase" if char.isupper() else "Special"
             
-            # Aggregate comfort scores
-            key1_code = keyboard.key_assignment[key1]
-            key2_code = keyboard.key_assignment[key2]
-            comfort_score += (keyboard.key_comfort[str(key1_code)] + keyboard.key_comfort[str(key2_code)]) / 2
-            
-    # Update the keyboard object's attributes
-    keyboard.total_distance_traveled = total_distance
+            if last_key:
+                if char.isupper():
+                    distance_to_shift = keyboard.calc_distance(last_key, 'SHIFT')
+                    distance_to_char = keyboard.calc_distance('SHIFT', current_key)
+                    total_distance += distance_to_shift + distance_to_char
+                    print(f"Processing {action} char '{char}' requiring SHIFT: Distance = {distance_to_shift + distance_to_char}")
+                else:
+                    distance = keyboard.calc_distance(last_key, current_key)
+                    total_distance += distance
+                    print(f"Processing {action} char '{char}': Distance = {distance}")
+            else:  # First character
+                if char.isupper():
+                    total_distance += keyboard.calc_distance('SHIFT', current_key)
+                else:
+                    total_distance += keyboard.calc_distance('SPACE', current_key)  # Assume starting from SPACE
+                
+            last_key = current_key
+        else:
+            if last_key:
+                distance = keyboard.calc_distance(last_key, char)
+                total_distance += distance
+                print(f"Processing lowercase char '{char}': Distance = {distance}")
+            last_key = char
+        
+        char_key_code = keyboard.key_assignment[current_key if needs_shift else char]
+        comfort = keyboard.key_comfort[str(char_key_code)]
+        comfort_score += comfort
+        print(f"Comfort score for '{char}': {comfort}")
+    
     # Normalize comfort score based on the text length
     keyboard.comfort_score = comfort_score / len(text_data)
+    keyboard.total_distance_traveled = total_distance
+    
+    print(f"Total distance traveled: {total_distance}")
+    print(f"Average comfort score: {keyboard.comfort_score}")
+    
     return keyboard
+
