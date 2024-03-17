@@ -84,8 +84,6 @@ def evaluate_keyboard(keyboard, text_data):
 
 # Create a keyboard instance
 test_keyboard = Keyboard()
-# Optionally randomize keys if testing for different layouts
-# test_keyboard.randomize_keys()
 
 # Define some test data
 test_texts = [
