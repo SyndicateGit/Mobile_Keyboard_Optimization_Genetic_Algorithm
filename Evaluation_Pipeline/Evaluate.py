@@ -82,8 +82,6 @@ def evaluate_keyboard(keyboard, text_data):
 
     return keyboard
 
-# Assuming evaluate_keyboard is either defined above this code or imported
-
 # Create a keyboard instance
 test_keyboard = Keyboard()
 # Optionally randomize keys if testing for different layouts
