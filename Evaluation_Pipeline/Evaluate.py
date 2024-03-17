@@ -48,7 +48,6 @@ def evaluate_keyboard(keyboard, text_data):
         needs_shift = char.isupper() or char in keyboard.key_assignment_non_letters
         
         if needs_shift:
-            # Use the helper method for characters requiring the SHIFT key
             distance, current_key = keyboard.calc_shift_distance(last_key, char)
             total_distance += distance
             action = "Uppercase" if char.isupper() else "Special"
