@@ -380,6 +380,18 @@ class Keyboard:
         # d = Δx^2 + Δy^2
         return distance
 
+def calc_shift_distance(self, last_key, char):
+        """Calculate the distance involving the SHIFT key for uppercase or special characters."""
+        current_key = char.lower() if char.isupper() else char  # Normalize to lowercase for uppercase characters
+        total_distance = 0
+        if 'SHIFT' in self.key_assignment:
+            if last_key:  # If there's a previous key, calculate the distance from it to SHIFT and then to the current character
+                distance_to_shift = self.calc_distance(last_key, 'SHIFT')
+                distance_to_char = self.calc_distance('SHIFT', current_key)
+                total_distance = distance_to_shift + distance_to_char
+            else:  # If it's the first character, only calculate the distance from SHIFT to the character
+                total_distance = self.calc_distance('SHIFT', current_key)
+        return total_distance, current_key
 
 # Testing
 # randomize_key
