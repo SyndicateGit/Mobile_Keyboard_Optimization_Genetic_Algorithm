@@ -23,8 +23,14 @@ with open("the-reddit-dataset-dataset-comments.csv", "r") as file:
         # special characters that would usually not be types by the user.
         elif "https://" in row["body"]:
             continue
+        elif "&amp" in row["body"]:
+            continue
+        elif "http://" in row["body"]:
+            continue
+        elif "[website]" in row["body"]:
+            continue
         
-        text_data += row["body"] + ' '
+        text_data += row["body"]
         
         if i + 1 >= max_rows:
             break 
