@@ -1,6 +1,12 @@
 import turtle
 import tkinter as tk
 from functools import partial
+
+import sys
+sys.path.append('..')
+
+from Main.KeyboardObject import Keyboard
+
 # from Mobile_Keyboard_Optimization_Genetic_Algorithm.Main.KeyboardObject import Keyboard
 import random
 def create_test_keyboard():
@@ -114,3 +120,9 @@ def display_keyboards_gui(keyboards):
     root.bind("<Right>", next_keyboard)
 
     root.mainloop()
+
+
+test_keyboard = Keyboard()
+test_keyboard.randomize_keys()
+
+display_keyboard_turtle(test_keyboard)
