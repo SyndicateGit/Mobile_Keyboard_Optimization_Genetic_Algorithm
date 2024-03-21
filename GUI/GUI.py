@@ -1,7 +1,7 @@
 import turtle
 import tkinter as tk
 from functools import partial
-from Mobile_Keyboard_Optimization_Genetic_Algorithm.Main.KeyboardObject import Keyboard
+# from Mobile_Keyboard_Optimization_Genetic_Algorithm.Main.KeyboardObject import Keyboard
 import random
 
 # Displays keyboard layout on screen.
