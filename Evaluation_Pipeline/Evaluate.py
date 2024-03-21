@@ -35,7 +35,6 @@ with open("the-reddit-dataset-dataset-comments.csv", "r") as file:
         if i + 1 >= max_rows:
             break 
 
-
 print(text_data)
 
 # Evaluate a keyboard's performance score by parsing through TextDatum
@@ -46,20 +45,66 @@ print(text_data)
 def evaluate_keyboard(keyboard, text_data):
     total_distance = 0
     comfort_score = 0
-    for i in range(len(text_data) - 1):
-        key1, key2 = text_data[i], text_data[i+1]
-        if key1 in keyboard.key_assignment and key2 in keyboard.key_assignment:
-            # Calculate distance between successive keys
-            distance = keyboard.calc_distance(key1, key2)
+    last_key = 'SPACE'  # Start from a neutral position like SPACE for the first character
+
+    print(f"Starting evaluation for text: {text_data}")
+
+    for char in text_data:
+        # Check if character is uppercase or special, requiring shift or direct access
+        needs_shift = char.isupper() or char in keyboard.key_assignment_non_letters
+        
+        if needs_shift:
+            distance, current_key = keyboard.calc_shift_distance(last_key, char)
             total_distance += distance
-            
-            # Aggregate comfort scores
-            key1_code = keyboard.key_assignment[key1]
-            key2_code = keyboard.key_assignment[key2]
-            comfort_score += (keyboard.key_comfort[str(key1_code)] + keyboard.key_comfort[str(key2_code)]) / 2
-            
-    # Update the keyboard object's attributes
-    keyboard.total_distance_traveled = total_distance
+            action = "Uppercase" if char.isupper() else "Special"
+            print(f"Processing {action} char '{char}': Total Distance += {distance}")
+        else:
+            # Normalize to lowercase for uppercase characters
+            current_key = char.lower() if char.isupper() else char
+            if current_key in keyboard.key_assignment:
+                # Calculate distance for lowercase and directly accessible characters
+                distance = keyboard.calc_distance(last_key, current_key)
+                total_distance += distance
+                print(f"Processing char '{char}': Total Distance += {distance}")
+            else:
+                print(f"Character '{char}' not in keyboard assignment. Skipping...")
+
+        last_key = current_key  # Update last_key to current character for next iteration
+        
+        # Calculate and update comfort score
+        if current_key in keyboard.key_assignment:
+            char_key_code = keyboard.key_assignment[current_key]
+            comfort = keyboard.key_comfort[str(char_key_code)]
+            comfort_score += comfort
+            print(f"Comfort score for '{char}': {comfort}")
+
     # Normalize comfort score based on the text length
     keyboard.comfort_score = comfort_score / len(text_data)
+    keyboard.total_distance_traveled = total_distance
+
+    print(f"Total distance traveled: {total_distance}")
+    print(f"Average comfort score: {keyboard.comfort_score}")
+
     return keyboard
+
+# Create a keyboard instance
+test_keyboard = Keyboard()
+
+# Define some test data
+test_texts = [
+    "1234567890",
+    "Hello World!",
+    "Python 3.8",
+    "G4m3r5",
+    "ABCDEFG",
+    "abcdefg",
+    "!@#$%^&*()",
+    "AAAAAAAAAAAAAAA",
+    "aAaAaAaAaAaAaAa",
+    "!@#$%^&*()_+{}:<>?",
+]
+
+# Evaluate each test string
+for text in test_texts:
+    print("\nEvaluating text:", text)
+    evaluate_keyboard(test_keyboard, text)
