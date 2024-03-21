@@ -3,6 +3,17 @@ import tkinter as tk
 from functools import partial
 # from Mobile_Keyboard_Optimization_Genetic_Algorithm.Main.KeyboardObject import Keyboard
 import random
+def create_test_keyboard():
+    from Mobile_Keyboard_Optimization_Genetic_Algorithm.Main.KeyboardObject import Keyboard
+    
+    # Create a new keyboard object
+    test_keyboard = Keyboard()
+
+    # Set some predefined attributes for testing
+    test_keyboard.total_distance_travelled = 1234  # Example total distance travelled
+    test_keyboard.total_comfort_score = 8  # Example total comfort score
+
+    return test_keyboard
 
 # Displays keyboard layout on screen.
 # Parameter Type: keyboard object
@@ -103,4 +114,3 @@ def display_keyboards_gui(keyboards):
     root.bind("<Right>", next_keyboard)
 
     root.mainloop()
-
