@@ -54,7 +54,7 @@ def evaluate_keyboard(keyboard, text_data):
     comfort_score = 0
     last_key = 'SPACE'  # Start from a neutral position like SPACE for the first character
 
-    print(f"Starting evaluation for text: {text_data}")
+    # print(f"Starting evaluation for text: {text_data}")
     # TODO: Does it check space? It doesn't. If ' ' do distance to space key.
     for char in text_data:
         # Check if character is uppercase or special, requiring shift or direct access
@@ -66,7 +66,7 @@ def evaluate_keyboard(keyboard, text_data):
         if char == ' ':
             distance = keyboard.calc_distance(last_key, 'SPACE')
             total_distance += distance
-            print(f"Processing SPACE: Total Distance += {distance}")
+            # print(f"Processing SPACE: Total Distance += {distance}")
             last_key = 'SPACE'
             continue  # Skip to the next character
             
@@ -76,7 +76,7 @@ def evaluate_keyboard(keyboard, text_data):
             distance, current_key = keyboard.calc_shift_distance(last_key, char)
             total_distance += distance
             action = "Uppercase" if char.isupper() else "Special"
-            print(f"Processing {action} char '{char}': Total Distance += {distance}")
+            # print(f"Processing {action} char '{char}': Total Distance += {distance}")
         else:
             # Normalize to lowercase for uppercase characters
             current_key = char.lower() if char.isupper() else char
@@ -84,9 +84,9 @@ def evaluate_keyboard(keyboard, text_data):
                 # Calculate distance for lowercase and directly accessible characters
                 distance = keyboard.calc_distance(last_key, current_key)
                 total_distance += distance
-                print(f"Processing char '{char}': Total Distance += {distance}")
+                # print(f"Processing char '{char}': Total Distance += {distance}")
             else:
-                print(f"Character '{char}' not in keyboard assignment. Skipping...")
+                # print(f"Character '{char}' not in keyboard assignment. Skipping...")
                 continue
 
         last_key = current_key  # Update last_key to current character for next iteration
@@ -96,7 +96,7 @@ def evaluate_keyboard(keyboard, text_data):
             char_key_code = keyboard.key_assignment[current_key]
             comfort = keyboard.key_comfort[str(char_key_code)]
             comfort_score += comfort
-            print(f"Comfort score for '{char}': {comfort}")
+            # print(f"Comfort score for '{char}': {comfort}")
 
     # Normalize comfort score based on the text length
     keyboard.comfort_score = comfort_score / len(text_data)

@@ -338,6 +338,7 @@ class Keyboard:
     # Performance scores to be evaluated
     comfort_score: 0
     total_distance_traveled: 0
+    combined_score: 0
 
     # Randomize key assignments
     # In key_assignment dictionary, randomizly swap the values between letter groups.
@@ -399,7 +400,7 @@ class Keyboard:
 
 # Testing
 # randomize_key
-test_keyboard = Keyboard()
-test_keyboard.randomize_keys()
-print(test_keyboard.key_assignment)
+# test_keyboard = Keyboard()
+# test_keyboard.randomize_keys()
+# print(test_keyboard.key_assignment)
 
