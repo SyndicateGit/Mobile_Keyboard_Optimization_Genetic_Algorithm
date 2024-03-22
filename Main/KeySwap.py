@@ -106,21 +106,21 @@ def mutate(keyboard, n):
 
 
 # Test Keyboards:
-keyboard1 = Keyboard()
-keyboard1.randomize_keys()
-keyboard2 = Keyboard()
-keyboard2.randomize_keys()
-keyboard3 = Keyboard()
-keyboard3 = key_swap(keyboard1, keyboard2)
+# keyboard1 = Keyboard()
+# keyboard1.randomize_keys()
+# keyboard2 = Keyboard()
+# keyboard2.randomize_keys()
+# keyboard3 = Keyboard()
+# keyboard3 = key_swap(keyboard1, keyboard2)
 
-# Testing KeySwap:
-print("Keyboard1 : ")
-print(keyboard1.key_assignment)
-print("Keyboard2 : ")
-print(keyboard2.key_assignment)
-print("Child Keyboard: ")
-print(keyboard3.key_assignment)
+# # Testing KeySwap:
+# print("Keyboard1 : ")
+# print(keyboard1.key_assignment)
+# print("Keyboard2 : ")
+# print(keyboard2.key_assignment)
+# print("Child Keyboard: ")
+# print(keyboard3.key_assignment)
 
-# Testing Mutate:
-print("Mutated Child: ")
-print(mutate(keyboard3, 5).key_assignment)
+# # Testing Mutate:
+# print("Mutated Child: ")
+# print(mutate(keyboard3, 5).key_assignment)

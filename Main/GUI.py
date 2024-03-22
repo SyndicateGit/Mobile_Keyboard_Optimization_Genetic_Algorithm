@@ -67,15 +67,15 @@ def display_mirrored_keys_with_horizontal_flip(keyboard):
 # be displayed on screen.
 # Parameter Type: keyboard object
 # Dependencies: KeyboardObject.py
-def display_keyboard_performance_score(keyboard):
-    print("Performance Evaluation Score:")
-    print("Total Distance Travelled:", keyboard.total_distance_travelled)
-    print("Total Comfort Score:", keyboard.total_comfort_score)
+# def display_keyboard_performance_score(keyboard):
+#     print("Performance Evaluation Score:")
+#     print("Total Distance Travelled:", keyboard.total_distance_travelled)
+#     print("Total Comfort Score:", keyboard.total_comfort_score)
 
 # Function to display a keyboard and its performance score
 
 
-test_keyboard = Keyboard()
-test_keyboard.randomize_keys()
+# test_keyboard = Keyboard()
+# test_keyboard.randomize_keys()
 
-display_mirrored_keys_with_horizontal_flip(test_keyboard)
+# display_mirrored_keys_with_horizontal_flip(test_keyboard)
