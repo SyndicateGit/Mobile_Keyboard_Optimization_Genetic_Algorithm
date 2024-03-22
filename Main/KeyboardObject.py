@@ -401,8 +401,7 @@ class Keyboard:
     # Do the same for non letter group.
     # No parameter, working with self key_assignment field.
     # Return: None. Mutating key_assignment field.
-    def randomize_keys(self):  # TODO: Azwad
-        # TODO: We don't want to shuffle letter keys with special keys for key assignment
+    def randomize_keys(self):  
         #   Shuffle letter key assignments
         #   Then shuffle special key assignments.
         #   We don't want SPACE, SHIFT, and 123/ABC key shuffled.
@@ -430,15 +429,18 @@ class Keyboard:
         key1_code = self.key_assignment[key1]
         key2_code = self.key_assignment[key2]
 
+        #TODO: I removed str() because dictionary no longer uses string for
+        # coordinates.
         # Retrieve the (x, y) coordinates for the keys
-        key1_coordinates = self.key_coordinates[str(key1_code)]
-        key2_coordinates = self.key_coordinates[str(key2_code)]
+        key1_coordinates = self.key_coordinates[key1_code]
+        key2_coordinates = self.key_coordinates[key2_code]
 
         # Calculate the Euclidean distance
         distance = ((key2_coordinates[0] - key1_coordinates[0])**2 + (key2_coordinates[1] - key1_coordinates[1])**2)**0.5
         # d = Δx^2 + Δy^2
         return distance
 
+    
     def calc_shift_distance(self, last_key, char):
         # Calculate the distance involving the SHIFT key for uppercase or special characters.
         current_key = char.lower() if char.isupper() else char  # Normalize to lowercase for uppercase characters
