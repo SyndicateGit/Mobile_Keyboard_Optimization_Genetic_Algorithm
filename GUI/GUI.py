@@ -53,8 +53,11 @@ def display_mirrored_keys_with_horizontal_flip(keyboard):
             pen.end_fill()
             pen.penup()
 
-            pen.goto(mirrored_x + key_width / 2 + 875, mirrored_y + key_height / 2 - 80)
-            pen.write(inv_map[key], align="center", font=("Arial", 12, "normal"))
+            pen.goto(mirrored_x + key_width / 2 + 875 + 2, mirrored_y + key_height / 2 - 80 - 58)
+
+            pen.color("white")
+            pen.write(inv_map[key].upper(), align="center", font=("Arial", 12, "normal"))
+            pen.color("black")
 
     pen.hideturtle()
 
