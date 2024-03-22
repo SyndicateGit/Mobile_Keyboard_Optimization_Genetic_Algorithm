@@ -35,6 +35,9 @@ def display_mirrored_keys_with_horizontal_flip(keyboard):
     key_width = 50
     key_height = 50
 
+    # For making the key_assignments map number to character, rather than character to number
+    inv_map = {v: k for k, v in keyboard.key_assignment.items()}
+
     for key, (x, y) in keyboard.key_coordinates.items():
         if key < 27 or key > 78:
             # Calculate mirrored coordinates with horizontal flip
@@ -50,8 +53,11 @@ def display_mirrored_keys_with_horizontal_flip(keyboard):
             pen.end_fill()
             pen.penup()
 
-            pen.goto(mirrored_x + key_width / 2 + 875, mirrored_y + key_height / 2 - 80)
-            pen.write(keyboard.key_symbol_to_number[key], align="center", font=("Arial", 12, "normal"))
+            pen.goto(mirrored_x + key_width / 2 + 875 + 2, mirrored_y + key_height / 2 - 80 - 58)
+
+            pen.color("white")
+            pen.write(inv_map[key].upper(), align="center", font=("Arial", 12, "normal"))
+            pen.color("black")
 
     pen.hideturtle()
 
