@@ -76,29 +76,31 @@ def find_key_by_value(keyboard, key_number):
 # Param type: keyboard object
 # Return type: keyboard object
 def mutate(keyboard, n):
-    # Have a list of all key assignment list (excluding Capital cases)
-    # Populating that list
-    assignable_characters = list(keyboard.key_assignment.keys())
-    assignable_characters = [key for key in assignable_characters if (len(key) > 1 or not key.isupper())]
+    # Extract letter keys and values
+    keys_letters = list(keyboard.key_assignment_letters.keys())
+    values_letters = list(keyboard.key_assignment_letters.values())
+    
+    # Extract non-letter keys and values
+    keys_non_letters = list(keyboard.key_assignment_non_letters.keys())
+    values_non_letters = list(keyboard.key_assignment_non_letters.values())
 
-    # Take n random keys from the assignable characters list and shuffle
-    mutate_keys = random.sample(assignable_characters, min(n, len(assignable_characters)))
-    random.shuffle(mutate_keys)
+    # Take n random keys of letter and non-letter keys
+    keys_to_mutate_letters = random.sample(list(keys_letters), n)
+    keys_to_mutate_non_letters = random.sample(list(keys_non_letters), n)
 
-    # Reassigning shuffled keys to the keyboard to then be returned
-    for key in mutate_keys:
-        # Obtaining key number for current key
-        keyNumber = keyboard.key_assignment[key]
+    # Shuffle the keys
+    random.shuffle(keys_to_mutate_letters)
+    random.shuffle(keys_to_mutate_non_letters)
 
-        # Removing key from its current spot
-        del keyboard.key_assignment[key]
+    # Update the key_assignment dictionary with the shuffled values
+    for i in range(n):
+        new_value_letter = values_letters[keys_letters.index(keys_to_mutate_letters[i])]
+        new_value_non_letter = values_non_letters[keys_non_letters.index(keys_to_mutate_non_letters[i])]
 
-        # Assign the key to a random location
-        newKey = random.choice(assignable_characters)
-        keyboard.key_assignment[newKey] = keyNumber
-        
-        #Remove the new key from assignable_characters list
-        assignable_characters.remove(newKey)
+        keyboard.key_assignment_letters[keys_to_mutate_letters[i]] = new_value_non_letter
+        keyboard.key_assignment_non_letters[keys_to_mutate_non_letters[i]] = new_value_letter
+
+    keyboard.key_assignment = keyboard.key_assignment_letters | keyboard.key_assignment_non_letters | keyboard.key_assignment_statics
 
     return keyboard
 
@@ -108,6 +110,8 @@ keyboard1 = Keyboard()
 keyboard1.randomize_keys()
 keyboard2 = Keyboard()
 keyboard2.randomize_keys()
+keyboard3 = Keyboard()
+keyboard3 = key_swap(keyboard1, keyboard2)
 
 # Testing KeySwap:
 print("Keyboard1 : ")
@@ -115,4 +119,8 @@ print(keyboard1.key_assignment)
 print("Keyboard2 : ")
 print(keyboard2.key_assignment)
 print("Child Keyboard: ")
-print(key_swap(keyboard1, keyboard2).key_assignment)
+print(keyboard3.key_assignment)
+
+# Testing Mutate:
+print("Mutated Child: ")
+print(mutate(keyboard3, 5).key_assignment)
