@@ -441,6 +441,12 @@ class Keyboard:
         # Retrieve the integer codes for the keys
         key1_code = self.key_assignment[key1]
         key2_code = self.key_assignment[key2]
+
+          # If either key code is None, return 0 as the distance
+        if key1_code is None or key2_code is None:
+            print(f"Warning: One of the keys ('{key1}', '{key2}') is not found in key assignments. Returning distance 0.")
+            return 0
+        
         # Retrieve the (x, y) coordinates for the keys
         key1_coordinates = self.key_coordinates[key1_code]
         key2_coordinates = self.key_coordinates[key2_code]
