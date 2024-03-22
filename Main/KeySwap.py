@@ -55,7 +55,14 @@ def key_swap(keyboard1, keyboard2):
 
             assignable_characters.remove(key_displaced)
             current_key = key_displaced
-
+            # Update child's key_assignment_letters and key_assignment_non_letters
+            
+    for key, value in child_keyboard.key_assignment.items():
+        if len(key) > 1 or not key.isupper():
+            child_keyboard.key_assignment_non_letters[key] = value
+        else:
+            child_keyboard.key_assignment_letters[key] = value
+          
     return child_keyboard
 
 # Helper function that searches for key assigned to key number on keyboard
