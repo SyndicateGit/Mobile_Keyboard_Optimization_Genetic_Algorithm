@@ -23,29 +23,25 @@ from Main.KeyboardObject import Keyboard
 # Step3) Why don't we try drawing just the lowercase keys and static.
 # Step4) We can then have the special keys be drawn next to the letter keys to
 # show the user they occupy the same key space.
-def display_keyboard_turtle(keyboard):
-    # Set up the screen
+def display_mirrored_keys_with_horizontal_flip(keyboard):
     screen = turtle.Screen()
-    screen.setup(width=1200, height=1000)
-    screen.title("Keyboard Layout")
+    screen.setup(width=800, height=600)
+    screen.title("Mirrored Keyboard Layout with Horizontal Flip")
 
-    # Initialize Turtle
     pen = turtle.Turtle()
     pen.penup()
     pen.speed(0)
 
-    # Define key size and spacing
     key_width = 50
     key_height = 50
-    key_spacing = 10
 
-    # Draw the keys
     for key, (x, y) in keyboard.key_coordinates.items():
         if key < 27 or key > 78:
-            # Move to the position
-            pen.goto(x-200, y-350)
-            
-            # Draw the key
+            # Calculate mirrored coordinates with horizontal flip
+            mirrored_x = -x - 200
+            mirrored_y = y - 350
+
+            pen.goto(mirrored_x + 875, mirrored_y - 80)
             pen.pendown()
             pen.begin_fill()
             for _ in range(4):
@@ -53,15 +49,12 @@ def display_keyboard_turtle(keyboard):
                 pen.right(90)
             pen.end_fill()
             pen.penup()
-            
-            # Write the key label
-            pen.goto(x + key_width / 2 - 200, y + key_height / 2 - 350)
+
+            pen.goto(mirrored_x + key_width / 2 + 875, mirrored_y + key_height / 2 - 80)
             pen.write(keyboard.key_symbol_to_number[key], align="center", font=("Arial", 12, "normal"))
 
-    # Hide the pen
     pen.hideturtle()
 
-    # Keep the window open
     screen.mainloop()
 
 # Keyboard object have attributes for performance scores that will
@@ -79,4 +72,4 @@ def display_keyboard_performance_score(keyboard):
 test_keyboard = Keyboard()
 test_keyboard.randomize_keys()
 
-display_keyboard_turtle(test_keyboard)
+display_mirrored_keys_with_horizontal_flip(test_keyboard)
