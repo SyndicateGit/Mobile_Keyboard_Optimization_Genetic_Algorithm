@@ -62,6 +62,14 @@ def evaluate_keyboard(keyboard, text_data):
         # is a different location than the shift key. 
         # It should just be like the calculate shift distance function you've
         # made but with the "123" key.
+
+        if char == ' ':
+            distance = keyboard.calc_distance(last_key, 'SPACE')
+            total_distance += distance
+            print(f"Processing SPACE: Total Distance += {distance}")
+            last_key = 'SPACE'
+            continue  # Skip to the next character
+            
         needs_shift = char.isupper() or char in keyboard.key_assignment_non_letters
         
         if needs_shift:
