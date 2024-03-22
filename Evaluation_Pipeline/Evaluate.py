@@ -70,7 +70,7 @@ def evaluate_keyboard(keyboard, text_data):
             last_key = 'SPACE'
             continue  # Skip to the next character
             
-        needs_shift = char.isupper() or char in keyboard.key_assignment_non_letters
+        needs_shift = (char.isupper() and char.isalpha()) or char in keyboard.key_assignment_non_letters
         
         if needs_shift:
             distance, current_key = keyboard.calc_shift_distance(last_key, char)
@@ -87,6 +87,7 @@ def evaluate_keyboard(keyboard, text_data):
                 print(f"Processing char '{char}': Total Distance += {distance}")
             else:
                 print(f"Character '{char}' not in keyboard assignment. Skipping...")
+                continue
 
         last_key = current_key  # Update last_key to current character for next iteration
         
