@@ -424,13 +424,23 @@ class Keyboard:
     # Calculates distance between 2 keys using euclidian distance
     # Param type: string. Example: calc_distance("A", "B")
     # Return type: float Example: 2.52
+
+     def calc_123_distance(self, last_key, char):
+           # Calculate distance for characters requiring the '123' key switch.
+        current_key = char.lower() if char.isupper() else char  # Normalize uppercase
+        total_distance = 0
+
+        if '123' in self.key_assignment:
+            # Calculate distance from last key to '123', then from '123' to the character's key
+            distance_to_123 = self.calc_distance(last_key, '123')
+            distance_from_123_to_char = self.calc_distance('123', current_key)
+            total_distance = distance_to_123 + distance_from_123_to_char
+        return total_distance, current_key
+
     def calc_distance(self, key1, key2):  # TODO: Jasmine
         # Retrieve the integer codes for the keys
         key1_code = self.key_assignment[key1]
         key2_code = self.key_assignment[key2]
-
-        #TODO: I removed str() because dictionary no longer uses string for
-        # coordinates.
         # Retrieve the (x, y) coordinates for the keys
         key1_coordinates = self.key_coordinates[key1_code]
         key2_coordinates = self.key_coordinates[key2_code]
@@ -439,7 +449,6 @@ class Keyboard:
         distance = ((key2_coordinates[0] - key1_coordinates[0])**2 + (key2_coordinates[1] - key1_coordinates[1])**2)**0.5
         # d = Δx^2 + Δy^2
         return distance
-
     
     def calc_shift_distance(self, last_key, char):
         # Calculate the distance involving the SHIFT key for uppercase or special characters.
