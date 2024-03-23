@@ -60,12 +60,13 @@ def evaluate_keyboards(keyboards, text_data):
     # Evaluate each keyboard
     for keyboard in keyboards:
         Evaluate.evaluate_keyboard(keyboard, text_data)
-        keyboard.combined_score =  (keyboard.comfort_score / keyboard.total_distance_traveled)*100000000
     return
 
 def sort_keyboards_by_combined_score(keyboards):
   keyboards.sort(key=lambda x: x.combined_score, reverse=True)
-  return keyboards
+  # for keyboard in keyboards:
+  #   print(keyboard.combined_score)
+  return list(keyboards)
 
 def select_top_performing_keyboards(keyboards, n):
   sort_keyboards_by_combined_score(keyboards)
@@ -81,10 +82,11 @@ def generate_next_generation(keyboards, n):
     parent1 = keyboards[parent1_index]
     parent2 = keyboards[parent2_index]
     child = KeySwap.key_swap(parent1, parent2)
+    Evaluate.evaluate_keyboard(child, text_data)
+    print("Child Score:", child.combined_score)
     next_generation.append(child)
   for keyboard in keyboards:
     next_generation.append(keyboard)
-  print(len(next_generation))
   return next_generation
   
 def main():
@@ -97,13 +99,17 @@ def main():
   current_score = 0
   generation = 1
   keyboards = generate_initial_keyboards()
-  evaluate_keyboards(keyboards, text_data)
+  print(keyboards[0].key_assignment)
   while(current_score < target_score * 1.5):
-    top_performers = select_top_performing_keyboards(keyboards, 10)
-    current_score = top_performers[0].combined_score
+    evaluate_keyboards(keyboards, text_data)
+    sort_keyboards_by_combined_score(keyboards)
+    keyboards = keyboards[:10]
+    current_score = keyboards[0].combined_score
     print("Generation " + str(generation) + " Score:", current_score)
     # This line is returning None
-    keyboards = generate_next_generation(top_performers, 100)
+    keyboards = generate_next_generation(keyboards, 100)
+    print(keyboards[0].key_assignment)
+    generation += 1
     
   
 
