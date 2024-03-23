@@ -1,1 +1,2 @@
-keyboards = generate_next_generation(top_performers, 100)
+for i in range(len(next_generation)):
+    print(next_generation[i].key_assignment)
