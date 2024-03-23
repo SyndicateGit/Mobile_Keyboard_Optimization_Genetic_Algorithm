@@ -118,7 +118,7 @@ def main():
     keyboards = keyboards[:10]
     current_score = keyboards[0].combined_score
     print("Generation " + str(generation) + " Score:", current_score)
-    # TODO: somehow each generation is the same.
+    # This is needed for the next random part to work, not sure why
     random.shuffle(keyboards)
     keyboards = generate_next_generation(keyboards, 50, generation)
     generation += 1
