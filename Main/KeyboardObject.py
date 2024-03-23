@@ -346,12 +346,11 @@ class Keyboard:
     # Calculates distance between 2 keys using euclidian distance
     # Param type: string. Example: calc_distance("A", "B")
     # Return type: float Example: 2.52
-    def calc_distance(self, key1, key2):  # TODO: Jasmine
+    def calc_distance(self, key1, key2):  
         # Retrieve the integer codes for the keys
         key1_code = self.key_assignment[key1]
         key2_code = self.key_assignment[key2]
 
-        #TODO: I removed str() because dictionary no longer uses string for
         # coordinates.
         # Retrieve the (x, y) coordinates for the keys
         key1_coordinates = self.key_coordinates[key1_code]

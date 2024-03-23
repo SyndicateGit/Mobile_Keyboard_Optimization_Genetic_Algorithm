@@ -2,14 +2,15 @@ from KeyboardObject import Keyboard
 import KeySwap
 import GUI
 import Evaluate
-from random import randrange
+import random
 
 # Main is where we do the scripting for the pipeline and generate the
 # list of keyboards representing the top performing keyboard of a generation
 # to pass to GUI for display.
 import sys
 sys.path.append('..')
-
+parentIndex1 = 0
+parentIndex2 = 0
 
 import csv
 
@@ -72,34 +73,31 @@ def select_top_performing_keyboards(keyboards, n):
   sort_keyboards_by_combined_score(keyboards)
   return keyboards[:n]
 
-def generate_next_generation(keyboards, n):
+def generate_next_generation(keyboards, n, seed):
   next_generation = []
   for i in range(n - 10):
-    parent1_index = randrange(0, 10)
-    parent2_index = randrange(0, 10)
-    while(parent1_index == parent2_index):
-      parent2_index = randrange(0, 10)
-      #TODO: Fix error
-    # Error is here... appending new keyboard object somehow references the same object for all.
-    # This makes it so any old child of next_generation is the same as the new child.
+    random.seed(random.randint(0, seed**2 + i))
+    parentIndex1 = random.randint(0, 9)
+    parentIndex2 = random.randint(0, 9)
+    while(parentIndex1 == parentIndex2):
+      parentIndex2 = random.randint(0, 9)
+
     child = Keyboard()
-    child = KeySwap.key_swap(keyboards[parent1_index], keyboards[parent2_index])
+    child = KeySwap.key_swap(keyboards[parentIndex1], keyboards[parentIndex2])
     next_generation.append(child)
-    
-    
-  for i in range(len(next_generation)):
-    # Different object reference for each child
-    print("Child number: ", i)
-    print(next_generation[i].key_assignment)
     
   for keyboard in keyboards:
     next_generation.append(keyboard)
-  
   return next_generation
   
 def printKeyboardScores(keyboards):
   for keyboard in keyboards:
     print(keyboard.combined_score)
+  return
+
+def printKeyboardKeys(keyboards):
+  for keyboard in keyboards:
+    print(keyboard.key_assignment)
   return
 
 def main():
@@ -112,16 +110,17 @@ def main():
   current_score = 0
   generation = 1
   keyboards = generate_initial_keyboards()
-
-  #while(current_score < target_score * 1.5):
-  evaluate_keyboards(keyboards, text_data)
-  sort_keyboards_by_combined_score(keyboards)
-  keyboards = keyboards[:10]
-  current_score = keyboards[0].combined_score
-  print("Generation " + str(generation) + " Score:", current_score)
-  generate_next_generation(keyboards, 50)
-    
-  generation += 1
+  while(current_score < target_score * 1.5):
+    evaluate_keyboards(keyboards, text_data)
+    sort_keyboards_by_combined_score(keyboards)
+    printKeyboardScores(keyboards)
+    keyboards = keyboards[:10]
+    current_score = keyboards[0].combined_score
+    print("Generation " + str(generation) + " Score:", current_score)
+    # TODO: somehow each generation is the same.
+    random.shuffle(keyboards)
+    keyboards = generate_next_generation(keyboards, 50, generation)
+    generation += 1
     
   
 

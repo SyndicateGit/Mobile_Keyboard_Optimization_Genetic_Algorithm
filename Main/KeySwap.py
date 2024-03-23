@@ -38,6 +38,7 @@ def key_swap(keyboard1, keyboard2):
         current_key = cycle_start_key
         key_displaced = -1
         selected_parent = random.choice([1, 2])
+        selected_parent = random.choice([1, 2])
         while key_displaced != cycle_start_key:
             if(selected_parent == 1):
                 parent_assign_keyboard = keyboard1
