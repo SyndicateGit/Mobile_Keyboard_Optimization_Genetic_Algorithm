@@ -59,14 +59,14 @@ def generate_initial_keyboards():
 def evaluate_keyboards(keyboards, text_data):
     # Evaluate each keyboard
     for keyboard in keyboards:
-        Evaluate.evaluate_keyboard(keyboard, text_data)
+      Evaluate.evaluate_keyboard(keyboard, text_data)
     return
 
 def sort_keyboards_by_combined_score(keyboards):
   keyboards.sort(key=lambda x: x.combined_score, reverse=True)
   # for keyboard in keyboards:
   #   print(keyboard.combined_score)
-  return list(keyboards)
+  return
 
 def select_top_performing_keyboards(keyboards, n):
   sort_keyboards_by_combined_score(keyboards)
@@ -74,21 +74,22 @@ def select_top_performing_keyboards(keyboards, n):
 
 def generate_next_generation(keyboards, n):
   next_generation = []
+  childs = []
   for i in range(n - 10):
     parent1_index = randrange(0, 10)
     parent2_index = randrange(0, 10)
     while(parent1_index == parent2_index):
       parent2_index = randrange(0, 10)
-    parent1 = keyboards[parent1_index]
-    parent2 = keyboards[parent2_index]
-    child = KeySwap.key_swap(parent1, parent2)
-    Evaluate.evaluate_keyboard(child, text_data)
-    print("Child Score:", child.combined_score)
-    next_generation.append(child)
+    childs.append(KeySwap.key_swap(keyboards[parent1_index], keyboards[parent2_index]))
   for keyboard in keyboards:
     next_generation.append(keyboard)
   return next_generation
   
+def printKeyboardScores(keyboards):
+  for keyboard in keyboards:
+    print(keyboard.combined_score)
+  return
+
 def main():
   # Default QWERTY Keyboard
   Bob = Keyboard()
@@ -99,16 +100,17 @@ def main():
   current_score = 0
   generation = 1
   keyboards = generate_initial_keyboards()
-  print(keyboards[0].key_assignment)
+
   while(current_score < target_score * 1.5):
+    # Some reason keyboards stays at len(10) and doesn't change
     evaluate_keyboards(keyboards, text_data)
     sort_keyboards_by_combined_score(keyboards)
+ 
     keyboards = keyboards[:10]
     current_score = keyboards[0].combined_score
     print("Generation " + str(generation) + " Score:", current_score)
-    # This line is returning None
-    keyboards = generate_next_generation(keyboards, 100)
-    print(keyboards[0].key_assignment)
+
+    keyboards = generate_next_generation(keyboards, 50)
     generation += 1
     
   
