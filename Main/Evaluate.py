@@ -101,9 +101,11 @@ def evaluate_keyboard(keyboard, text_data):
     # Normalize comfort score based on the text length
     keyboard.comfort_score = comfort_score / len(text_data)
     keyboard.total_distance_traveled = total_distance
+    keyboard.combined_score =  (keyboard.comfort_score / keyboard.total_distance_traveled)*100000000
 
-    print(f"Total distance traveled: {total_distance}")
-    print(f"Average comfort score: {keyboard.comfort_score}")
+    # print(f"Total distance traveled: {total_distance}")
+    # print(f"Average comfort score: {keyboard.comfort_score}")
+    # print(f"Combined score: {keyboard.combined_score}")
 
     return keyboard
 

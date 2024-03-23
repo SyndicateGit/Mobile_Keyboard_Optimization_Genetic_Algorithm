@@ -60,11 +60,6 @@ def evaluate_keyboards(keyboards, text_data):
     # Evaluate each keyboard
     for keyboard in keyboards:
         Evaluate.evaluate_keyboard(keyboard, text_data)
-        keyboard.total_distance_traveled = keyboard.total_distance_traveled / len_data
-        keyboard.comfort_score = keyboard.comfort_score / len_data
-        # print(keyboard.total_distance_traveled, keyboard.comfort_score)
-        keyboard.combined_score =  (keyboard.comfort_score / keyboard.total_distance_traveled)*100000000
-        # print(keyboard.combined_score)
     return
 
 def sort_keyboards_by_combined_score(keyboards):
@@ -78,23 +73,36 @@ def select_top_performing_keyboards(keyboards, n):
 def generate_next_generation(keyboards, n):
   next_generation = []
   for i in range(n - 10):
-    parent1_index = randrange(0, n)
-    parent2_index = randrange(0, n)
+    parent1_index = randrange(0, 10)
+    parent2_index = randrange(0, 10)
     while(parent1_index == parent2_index):
-      parent2_index = randrange(0, n)
+      parent2_index = randrange(0, 10)
     parent1 = keyboards[parent1_index]
     parent2 = keyboards[parent2_index]
     child = KeySwap.key_swap(parent1, parent2)
     next_generation.append(child)
-  return next_generation.extend(keyboards)
+  for keyboard in keyboards:
+    next_generation.append(keyboard)
+  return next_generation
   
 def main():
   # Default QWERTY Keyboard
-  QWERTY = Keyboard()
-  QWERTY = Evaluate.evaluate_keyboard(QWERTY, text_data)
-  target_score = QWERTY.combined_score
+  Bob = Keyboard()
+  Evaluate.evaluate_keyboard(Bob, text_data)
+  target_score = Bob.combined_score
   print("Target Score:", target_score)
   
+  current_score = 0
+  generation = 1
+  keyboards = generate_initial_keyboards()
+  evaluate_keyboards(keyboards, text_data)
+  while(current_score < target_score * 1.5):
+    top_performers = select_top_performing_keyboards(keyboards, 10)
+    print(len(top_performers))
+    current_score = top_performers[0].combined_score
+    print("Generation " + str(generation) + " Score:", current_score)
+    keyboards = generate_next_generation(top_performers, 100)
+    evaluate_keyboards(keyboards, text_data)
   
 
 main()
