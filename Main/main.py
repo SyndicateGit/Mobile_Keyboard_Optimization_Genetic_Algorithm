@@ -75,7 +75,7 @@ def select_top_performing_keyboards(keyboards, n):
 
 def generate_next_generation(keyboards, n, seed):
   next_generation = []
-  for i in range(n - 10):
+  for i in range(n - 20):
     random.seed(random.randint(0, seed**2 + i))
     parentIndex1 = random.randint(0, 9)
     parentIndex2 = random.randint(0, 9)
@@ -89,7 +89,14 @@ def generate_next_generation(keyboards, n, seed):
     
   for keyboard in keyboards:
     next_generation.append(keyboard)
+  
+  for i in range(10):
+    keyboard = Keyboard()
+    keyboard.randomize_keys()
+    next_generation.append(keyboard)
+    
   return next_generation
+  
   
 def printKeyboardScores(keyboards):
   for keyboard in keyboards:
@@ -107,12 +114,12 @@ def main():
   Evaluate.evaluate_keyboard(Bob, text_data)
   target_score = Bob.combined_score
   print("QWERTY Score:", target_score)
-  print("Target Score:", target_score * 1.5)
+  print("Target Score:", target_score * 1.25)
   
   current_score = 0
   generation = 1
   keyboards = generate_initial_keyboards()
-  while(current_score < target_score or generation < 10):
+  while(current_score < target_score * 1.30 and generation < 50):
     evaluate_keyboards(keyboards, text_data)
     sort_keyboards_by_combined_score(keyboards)
     keyboards = keyboards[:10]
