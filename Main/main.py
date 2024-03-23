@@ -60,6 +60,7 @@ def evaluate_keyboards(keyboards, text_data):
     # Evaluate each keyboard
     for keyboard in keyboards:
         Evaluate.evaluate_keyboard(keyboard, text_data)
+        keyboard.combined_score =  (keyboard.comfort_score / keyboard.total_distance_traveled)*100000000
     return
 
 def sort_keyboards_by_combined_score(keyboards):
@@ -83,6 +84,7 @@ def generate_next_generation(keyboards, n):
     next_generation.append(child)
   for keyboard in keyboards:
     next_generation.append(keyboard)
+  print(len(next_generation))
   return next_generation
   
 def main():
@@ -98,11 +100,11 @@ def main():
   evaluate_keyboards(keyboards, text_data)
   while(current_score < target_score * 1.5):
     top_performers = select_top_performing_keyboards(keyboards, 10)
-    print(len(top_performers))
     current_score = top_performers[0].combined_score
     print("Generation " + str(generation) + " Score:", current_score)
+    # This line is returning None
     keyboards = generate_next_generation(top_performers, 100)
-    evaluate_keyboards(keyboards, text_data)
+    
   
 
 main()
