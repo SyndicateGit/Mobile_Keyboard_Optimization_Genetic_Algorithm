@@ -75,8 +75,6 @@ def select_top_performing_keyboards(keyboards, n):
 def generate_next_generation(keyboards, n):
   next_generation = []
   for i in range(n - 10):
-    keyboard = Keyboard()
-    next_generation.append(keyboard)
     parent1_index = randrange(0, 10)
     parent2_index = randrange(0, 10)
     while(parent1_index == parent2_index):
@@ -91,6 +89,7 @@ def generate_next_generation(keyboards, n):
     
   for i in range(len(next_generation)):
     # Different object reference for each child
+    print("Child number: ", i)
     print(next_generation[i].key_assignment)
     
   for keyboard in keyboards:
@@ -114,15 +113,15 @@ def main():
   generation = 1
   keyboards = generate_initial_keyboards()
 
-  while(current_score < target_score * 1.5):
-    evaluate_keyboards(keyboards, text_data)
-    sort_keyboards_by_combined_score(keyboards)
-    keyboards = keyboards[:10]
-    current_score = keyboards[0].combined_score
-    print("Generation " + str(generation) + " Score:", current_score)
-    generate_next_generation(keyboards, 50)
+  #while(current_score < target_score * 1.5):
+  evaluate_keyboards(keyboards, text_data)
+  sort_keyboards_by_combined_score(keyboards)
+  keyboards = keyboards[:10]
+  current_score = keyboards[0].combined_score
+  print("Generation " + str(generation) + " Score:", current_score)
+  generate_next_generation(keyboards, 50)
     
-    generation += 1
+  generation += 1
     
   
 

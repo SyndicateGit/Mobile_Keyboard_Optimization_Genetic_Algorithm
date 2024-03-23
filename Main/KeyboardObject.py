@@ -1,6 +1,130 @@
 # Keyboard Object
 import random
 class Keyboard:
+
+    def __init__(self):
+        self.key_assignment_letters = {
+            "q": 1,  # LOWERCASE
+            "w": 2,
+            "e": 3,
+            "r": 4,
+            "t": 5,
+            "y": 6,
+            "u": 7,
+            "i": 8,
+            "o": 9,
+            "p": 10,
+            "a": 11,
+            "s": 12,
+            "d": 13,
+            "f": 14,
+            "g": 15,
+            "h": 16,
+            "j": 17,
+            "k": 18,
+            "l": 19,
+            "z": 20,
+            "x": 21,
+            "c": 22,
+            "v": 23,
+            "b": 24,
+            "n": 25,
+            "m": 26,
+        }
+
+        self.key_assignment_non_letters = {
+            "1": 53,  # NUMBERS & SYMBOLS
+            "2": 54,
+            "3": 55,
+            "4": 56,
+            "5": 57,
+            "6": 58,
+            "7": 59,
+            "8": 60,
+            "9": 61,
+            "0": 62,
+            "-": 63,
+            "/": 64,
+            ":": 65,
+            ";": 66,
+            "(": 67,
+            ")": 68,
+            "$": 69,
+            "&": 70,
+            "@": 71,
+            "QUOTATION": 72,
+            ".": 73,
+            ",": 74,
+            "?": 75,
+            "!": 76,
+            "'": 77,
+            "+": 78,
+        }
+
+        self.key_assignment_statics = {
+            "SPACE": 79,
+            "SHIFT": 80,
+            "123": 81
+        }
+
+        # Combine the dictionaries to form the complete key assignment dictionary
+        self.key_assignment = {
+            "q": 1,
+            "w": 2,
+            "e": 3,
+            "r": 4,
+            "t": 5,
+            "y": 6,
+            "u": 7,
+            "i": 8,
+            "o": 9,
+            "p": 10,
+            "a": 11,
+            "s": 12,
+            "d": 13,
+            "f": 14,
+            "g": 15,
+            "h": 16,
+            "j": 17,
+            "k": 18,
+            "l": 19,
+            "z": 20,
+            "x": 21,
+            "c": 22,
+            "v": 23,
+            "b": 24,
+            "n": 25,
+            "m": 26,
+            "1": 53,
+            "2": 54,
+            "3": 55,
+            "4": 56,
+            "5": 57,
+            "6": 58,
+            "7": 59,
+            "8": 60,
+            "9": 61,
+            "0": 62,
+            "-": 63,
+            "/": 64,
+            ":": 65,
+            ";": 66,
+            "(": 67,
+            ")": 68,
+            "$": 69,
+            "&": 70,
+            "@": 71,
+            "QUOTATION": 72,
+            ".": 73,
+            ",": 74,
+            "?": 75,
+            "!": 76,
+            "'": 77,
+            "+": 78,
+            "SPACE": 79,
+            "SHIFT": 80,
+            "123": 81
+        }
     # Coordinates of all keys representing (x,y) coordinate
     # (0,0) starts at bottom right of screen for right hand mode
     # Hard coded values depending on initial layout design based on
@@ -99,89 +223,7 @@ class Keyboard:
     #  need key assignment for capital letters. We can just have the shift key make all the characters
     #  on screen alternate between cases.
     #  This also makes KeySwap easier for me logic wise.
-    key_assignment = {
-        "q": 1,             #LOWERCASE
-        "w": 2,
-        "e": 3,
-        "r": 4,
-        "t": 5,
-        "y": 6,
-        "u": 7,
-        "i": 8,
-        "o": 9,
-        "p": 10,
-        "a": 11,
-        "s": 12,
-        "d": 13,
-        "f": 14,
-        "g": 15,
-        "h": 16,
-        "j": 17,
-        "k": 18,
-        "l": 19,
-        "z": 20,
-        "x": 21,
-        "c": 22,
-        "v": 23,
-        "b": 24,
-        "n": 25,
-        "m": 26,
-        # "Q": 27,            #UPPERCASE
-        # "W": 28,
-        # "E": 29,
-        # "R": 30,
-        # "T": 31,
-        # "Y": 32,
-        # "U": 33,
-        # "I": 34,
-        # "O": 35,
-        # "P": 36,
-        # "A": 37,
-        # "S": 38,
-        # "D": 39,
-        # "F": 40,
-        # "G": 41,
-        # "H": 42,
-        # "J": 43,
-        # "K": 44,
-        # "L": 45,
-        # "Z": 46,
-        # "X": 47,
-        # "C": 48,
-        # "V": 49,
-        # "B": 50,
-        # "N": 51,
-        # "M": 52,
-        "1": 53,            #NUMBERS & SYMBOLS
-        "2": 54,
-        "3": 55,
-        "4": 56,
-        "5": 57,
-        "6": 58,
-        "7": 59,
-        "8": 60,
-        "9": 61,
-        "0": 62,
-        "-": 63,
-        "/": 64,
-        ":": 65,
-        ";": 66,
-        "(": 67,
-        ")": 68,
-        "$": 69,
-        "&": 70,
-        "@": 71,
-        "QUOTATION": 72,
-        ".": 73,
-        ",": 74,
-        "?": 75,
-        "!": 76,
-        "'": 77,
-        "+": 78,
-        "SPACE": 79,
-        "SHIFT": 80,        #SPECIAL/KEYBOARD CHANGING CHARACTERS (EX: Keyb1: 1-26, Keyb2: 27-52, Keyb3: 53-78... 79, 80, and 81 Static)
-        "123": 81
-    }  # TODO: Michael default qwerty
+     # TODO: Michael default qwerty
     # Comfortability scores
     # Key Type: int (1 to 81)
     # Value: int (comfort score decided based on ergonomics paper) - scale of 1 to 10.
@@ -269,70 +311,6 @@ class Keyboard:
         "81": 6      #123/abc
     }  # TODO: Sal, look into ergo paper.
 
-    key_assignment_letters = {
-        "q": 1,  # LOWERCASE
-        "w": 2,
-        "e": 3,
-        "r": 4,
-        "t": 5,
-        "y": 6,
-        "u": 7,
-        "i": 8,
-        "o": 9,
-        "p": 10,
-        "a": 11,
-        "s": 12,
-        "d": 13,
-        "f": 14,
-        "g": 15,
-        "h": 16,
-        "j": 17,
-        "k": 18,
-        "l": 19,
-        "z": 20,
-        "x": 21,
-        "c": 22,
-        "v": 23,
-        "b": 24,
-        "n": 25,
-        "m": 26,
-    }
-
-    key_assignment_non_letters = {
-        "1": 53,  # NUMBERS & SYMBOLS
-        "2": 54,
-        "3": 55,
-        "4": 56,
-        "5": 57,
-        "6": 58,
-        "7": 59,
-        "8": 60,
-        "9": 61,
-        "0": 62,
-        "-": 63,
-        "/": 64,
-        ":": 65,
-        ";": 66,
-        "(": 67,
-        ")": 68,
-        "$": 69,
-        "&": 70,
-        "@": 71,
-        "QUOTATION": 72,
-        ".": 73,
-        ",": 74,
-        "?": 75,
-        "!": 76,
-        "'": 77,
-        "+": 78,
-    }
-
-    key_assignment_statics = {
-        "SPACE": 79,
-        "SHIFT": 80,
-        # SPECIAL/KEYBOARD CHANGING CHARACTERS (EX: Keyb1: 1-26, Keyb2: 27-52, Keyb3: 53-78... 79, 80, and 81 Static)
-        "123": 81
-    }
 
 
     # Performance scores to be evaluated
