@@ -314,9 +314,9 @@ class Keyboard:
 
 
     # Performance scores to be evaluated
-    comfort_score: 0
-    total_distance_traveled: 0
-    combined_score: 0
+    comfort_score = 0
+    total_distance_traveled = 0
+    combined_score = 0
 
     # Randomize key assignments
     # In key_assignment dictionary, randomizly swap the values between letter groups.

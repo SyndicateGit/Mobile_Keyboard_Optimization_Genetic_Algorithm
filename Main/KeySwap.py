@@ -19,7 +19,7 @@ def key_swap(keyboard1, keyboard2):
     # Have a list of all assignable characters (excluding Capital cases)
     # Randomize that list
     assignable_characters = list(child_keyboard.key_assignment.keys())
-    assignable_characters = [key for key in assignable_characters if (len(key) > 1 or not key.isupper())]
+    assignable_characters = [key for key in assignable_characters if (key not in child_keyboard.key_assignment_statics)]
     random.shuffle(assignable_characters)
 
     # While the assignable list still has assignable characters:
@@ -38,7 +38,6 @@ def key_swap(keyboard1, keyboard2):
         current_key = cycle_start_key
         key_displaced = -1
         selected_parent = random.choice([1, 2])
-        selected_parent = random.choice([1, 2])
         while key_displaced != cycle_start_key:
             if(selected_parent == 1):
                 parent_assign_keyboard = keyboard1
@@ -53,17 +52,22 @@ def key_swap(keyboard1, keyboard2):
 
             if(key_displaced == cycle_start_key):  # Both parents have same location for key assigned
                 continue
-
             assignable_characters.remove(key_displaced)
             current_key = key_displaced
-            # Update child's key_assignment_letters and key_assignment_non_letters
-            
+    # Update child's key_assignment_letters and key_assignment_non_letters
+    # TODO: This didn't work
+    child_key_assignment_letters = {}
+    child_key_assignment_non_letters = {}
     for key, value in child_keyboard.key_assignment.items():
-        if len(key) > 1 or not key.isupper():
-            child_keyboard.key_assignment_non_letters[key] = value
+        if(key in child_keyboard.key_assignment_statics):
+            continue
+        if key.isalpha() and len(key) == 1:
+            child_key_assignment_letters[key] = value
         else:
-            child_keyboard.key_assignment_letters[key] = value
-          
+            child_key_assignment_non_letters[key] = value
+    child_keyboard.key_assignment_letters = child_key_assignment_letters
+    child_keyboard.key_assignment_non_letters = child_key_assignment_non_letters
+    
     return child_keyboard
 
 # Helper function that searches for key assigned to key number on keyboard

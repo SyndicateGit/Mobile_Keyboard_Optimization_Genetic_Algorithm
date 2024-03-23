@@ -84,6 +84,7 @@ def generate_next_generation(keyboards, n, seed):
 
     child = Keyboard()
     child = KeySwap.key_swap(keyboards[parentIndex1], keyboards[parentIndex2])
+    child = KeySwap.mutate(child, 3)
     next_generation.append(child)
     
   for keyboard in keyboards:
@@ -121,7 +122,5 @@ def main():
     random.shuffle(keyboards)
     keyboards = generate_next_generation(keyboards, 50, generation)
     generation += 1
-    
-  
 
 main()
