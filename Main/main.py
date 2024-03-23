@@ -75,6 +75,8 @@ def select_top_performing_keyboards(keyboards, n):
 def generate_next_generation(keyboards, n):
   next_generation = []
   for i in range(n - 10):
+    keyboard = Keyboard()
+    next_generation.append(keyboard)
     parent1_index = randrange(0, 10)
     parent2_index = randrange(0, 10)
     while(parent1_index == parent2_index):
@@ -82,9 +84,13 @@ def generate_next_generation(keyboards, n):
       #TODO: Fix error
     # Error is here... appending new keyboard object somehow references the same object for all.
     # This makes it so any old child of next_generation is the same as the new child.
-    next_generation.append(KeySwap.key_swap(keyboards[parent1_index], keyboards[parent2_index]))
+    child = Keyboard()
+    child = KeySwap.key_swap(keyboards[parent1_index], keyboards[parent2_index])
+    next_generation.append(child)
+    
     
   for i in range(len(next_generation)):
+    # Different object reference for each child
     print(next_generation[i].key_assignment)
     
   for keyboard in keyboards:
