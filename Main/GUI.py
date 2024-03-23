@@ -75,7 +75,7 @@ def display_mirrored_keys_with_horizontal_flip(keyboard):
 # Function to display a keyboard and its performance score
 
 
-#test_keyboard = Keyboard()
-#test_keyboard.randomize_keys()
+# test_keyboard = Keyboard()
+# test_keyboard.randomize_keys()
 
-#display_mirrored_keys_with_horizontal_flip(test_keyboard)
+# display_mirrored_keys_with_horizontal_flip(test_keyboard)

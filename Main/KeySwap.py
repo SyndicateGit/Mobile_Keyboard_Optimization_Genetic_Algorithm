@@ -52,6 +52,7 @@ def key_swap(keyboard1, keyboard2):
 
             if(key_displaced == cycle_start_key):  # Both parents have same location for key assigned
                 continue
+
             assignable_characters.remove(key_displaced)
             current_key = key_displaced
     # Update child's key_assignment_letters and key_assignment_non_letters
@@ -67,6 +68,7 @@ def key_swap(keyboard1, keyboard2):
             child_key_assignment_non_letters[key] = value
     child_keyboard.key_assignment_letters = child_key_assignment_letters
     child_keyboard.key_assignment_non_letters = child_key_assignment_non_letters
+    child_keyboard.key_assignment = child_keyboard.key_assignment_letters | child_keyboard.key_assignment_non_letters | child_keyboard.key_assignment_statics
     
     return child_keyboard
 
@@ -102,8 +104,8 @@ def mutate(keyboard, n):
         new_value_letter = values_letters[keys_letters.index(keys_to_mutate_letters[i])]
         new_value_non_letter = values_non_letters[keys_non_letters.index(keys_to_mutate_non_letters[i])]
 
-        keyboard.key_assignment_letters[keys_to_mutate_letters[i]] = new_value_non_letter
-        keyboard.key_assignment_non_letters[keys_to_mutate_non_letters[i]] = new_value_letter
+        keyboard.key_assignment_letters[keys_to_mutate_letters[i]] = new_value_letter
+        keyboard.key_assignment_non_letters[keys_to_mutate_non_letters[i]] = new_value_non_letter
 
     keyboard.key_assignment = keyboard.key_assignment_letters | keyboard.key_assignment_non_letters | keyboard.key_assignment_statics
 

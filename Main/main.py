@@ -106,21 +106,23 @@ def main():
   Bob = Keyboard()
   Evaluate.evaluate_keyboard(Bob, text_data)
   target_score = Bob.combined_score
-  print("Target Score:", target_score)
+  print("QWERTY Score:", target_score)
+  print("Target Score:", target_score * 1.5)
   
   current_score = 0
   generation = 1
   keyboards = generate_initial_keyboards()
-  while(current_score < target_score * 1.5):
+  while(current_score < target_score or generation < 10):
     evaluate_keyboards(keyboards, text_data)
     sort_keyboards_by_combined_score(keyboards)
-    printKeyboardScores(keyboards)
     keyboards = keyboards[:10]
     current_score = keyboards[0].combined_score
     print("Generation " + str(generation) + " Score:", current_score)
     # This is needed for the next random part to work, not sure why
     random.shuffle(keyboards)
-    keyboards = generate_next_generation(keyboards, 50, generation)
+    keyboards = generate_next_generation(keyboards, 100, generation)
     generation += 1
+  
+  GUI.display_mirrored_keys_with_horizontal_flip(keyboards[0])
 
 main()
