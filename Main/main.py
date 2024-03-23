@@ -79,6 +79,7 @@ def generate_next_generation(keyboards, n):
     parent2_index = randrange(0, 10)
     while(parent1_index == parent2_index):
       parent2_index = randrange(0, 10)
+      #TODO: Fix error
     # Error is here... appending new keyboard object somehow references the same object for all.
     # This makes it so any old child of next_generation is the same as the new child.
     next_generation.append(KeySwap.key_swap(keyboards[parent1_index], keyboards[parent2_index]))
