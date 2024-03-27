@@ -115,29 +115,52 @@ def main():
   Bob = Keyboard()
   Evaluate.evaluate_keyboard(Bob, text_data)
   target_score = Bob.combined_score
+  target_total_distance_traveled = Bob.total_distance_traveled
+  target_total_comfort_score = Bob.comfort_score
   print("QWERTY Score:", target_score)
-  print("Target Score:", target_score * 1.30)
+  print("Target Score:", target_score * 1.50)
   
-  coordinates = []
+  combined_score_plot = []
+  total_distance_traveled_plot = []
+  total_comfort_score_plot = []
   
   current_score = 0
   generation = 1
   keyboards = generate_initial_keyboards()
-  while(current_score < target_score * 1.30 and generation < 50):
+  while(current_score < target_score *1.5 and generation < 50):
     evaluate_keyboards(keyboards, text_data)
     sort_keyboards_by_combined_score(keyboards)
     keyboards = keyboards[:10]
     current_score = keyboards[0].combined_score
+    current_total_distance_traveled = keyboards[0].total_distance_traveled
+    current_total_comfort_score = keyboards[0].comfort_score
     print("Generation " + str(generation) + " Normalized Score (relative to QWERTY Score):", current_score/target_score)
-    coordinates.append((generation, current_score/target_score))
+    combined_score_plot.append((generation, current_score/target_score))
+    total_comfort_score_plot.append((generation, current_total_comfort_score/target_total_comfort_score))
+    total_distance_traveled_plot.append((generation, current_total_distance_traveled/target_total_distance_traveled))
     # This is needed for the next random part to work, not sure why
     random.shuffle(keyboards)
     keyboards = generate_next_generation(keyboards, 100, generation)
     generation += 1
-  plt.scatter(*zip(*coordinates))
+    
+  plt.scatter(*zip(*combined_score_plot))
+  plt.title("Normalized Score of Top Keyboard per Generation")
   plt.xlabel("Generation")
   plt.ylabel("Normalized Score (QWERTY = 1)")
   plt.show()
+  
+  plt.scatter(*zip(*total_comfort_score_plot))
+  plt.title("Total Comfort Score of Top Keyboard per Generation")
+  plt.xlabel("Generation")
+  plt.ylabel("Total Comfort Score")
+  plt.show()
+  
+  plt.scatter(*zip(*total_distance_traveled_plot))
+  plt.title("Total Distance Traveled of Top Keyboard per Generation")
+  plt.xlabel("Generation")
+  plt.ylabel("Total Distance Traveled")
+  plt.show()
+  
   GUI.display_mirrored_keys_with_horizontal_flip(keyboards[0])
 
 main()
