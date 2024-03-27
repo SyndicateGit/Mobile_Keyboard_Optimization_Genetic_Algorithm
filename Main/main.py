@@ -4,6 +4,8 @@ import GUI
 import Evaluate
 import random
 
+import matplotlib.pyplot as plt
+
 # Main is where we do the scripting for the pipeline and generate the
 # list of keyboards representing the top performing keyboard of a generation
 # to pass to GUI for display.
@@ -114,7 +116,9 @@ def main():
   Evaluate.evaluate_keyboard(Bob, text_data)
   target_score = Bob.combined_score
   print("QWERTY Score:", target_score)
-  print("Target Score:", target_score * 1.25)
+  print("Target Score:", target_score * 1.30)
+  
+  coordinates = []
   
   current_score = 0
   generation = 1
@@ -124,12 +128,16 @@ def main():
     sort_keyboards_by_combined_score(keyboards)
     keyboards = keyboards[:10]
     current_score = keyboards[0].combined_score
-    print("Generation " + str(generation) + " Score:", current_score)
+    print("Generation " + str(generation) + " Normalized Score (relative to QWERTY Score):", current_score/target_score)
+    coordinates.append((generation, current_score/target_score))
     # This is needed for the next random part to work, not sure why
     random.shuffle(keyboards)
     keyboards = generate_next_generation(keyboards, 100, generation)
     generation += 1
-  
+  plt.scatter(*zip(*coordinates))
+  plt.xlabel("Generation")
+  plt.ylabel("Normalized Score (QWERTY = 1)")
+  plt.show()
   GUI.display_mirrored_keys_with_horizontal_flip(keyboards[0])
 
 main()

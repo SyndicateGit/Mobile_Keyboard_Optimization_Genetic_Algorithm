@@ -13,27 +13,14 @@ import random
 # Things to keep in mind: Lowercase and Uppercase same location.
 # Keep spaces, shift, and 123 key locked.
 def key_swap(keyboard1, keyboard2):
-    # Create new keyboard object for child keyboard to be returned
     child_keyboard = Keyboard()
 
-    # Have a list of all assignable characters (excluding Capital cases)
-    # Randomize that list
     assignable_characters = list(child_keyboard.key_assignment.keys())
     assignable_characters = [key for key in assignable_characters if (key not in child_keyboard.key_assignment_statics)]
     random.shuffle(assignable_characters)
 
     # While the assignable list still has assignable characters:
     while(assignable_characters):
-        # Start a cycle:
-        # Pop a key from the list and assign the key location in child keyboard
-        # to the key of a random parent (this parent becomes parent_assign_keyboard)
-        # Find out which key gets displaced from the other keyboard that becomes parent_displaced_keyboard.
-        # That displaced key becomes the next key to be assigned using parent_assign_keyboard.
-        # This cycle continues until we go back to the first key that got assigned.
-        # ^This is if detection at beginning of loop
-        # End of a cycle
-        # Every key assigned in a cycle would be from one keyboard.
-        # Next pop another key from list and continue.
         cycle_start_key = assignable_characters.pop()
         current_key = cycle_start_key
         key_displaced = -1
@@ -45,18 +32,14 @@ def key_swap(keyboard1, keyboard2):
             else:
                 parent_assign_keyboard = keyboard2
                 parent_displaced_keyboard = keyboard1
-
             key_being_assigned = parent_assign_keyboard.key_assignment[current_key]
             child_keyboard.key_assignment[current_key] = key_being_assigned
             key_displaced = find_key_by_value(parent_displaced_keyboard, key_being_assigned)
-
             if(key_displaced == cycle_start_key):  # Both parents have same location for key assigned
                 continue
-
             assignable_characters.remove(key_displaced)
             current_key = key_displaced
     # Update child's key_assignment_letters and key_assignment_non_letters
-    # TODO: This didn't work
     child_key_assignment_letters = {}
     child_key_assignment_non_letters = {}
     for key, value in child_keyboard.key_assignment.items():
